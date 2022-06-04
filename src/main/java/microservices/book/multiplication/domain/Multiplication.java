@@ -13,4 +13,9 @@ public class Multiplication {
 
   private final int factorA;
   private final int factorB;
+
+  protected Multiplication() {
+    factorA = -1;
+    factorB = -1;
+  }
 }

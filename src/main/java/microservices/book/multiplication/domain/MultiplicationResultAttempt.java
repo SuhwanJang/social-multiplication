@@ -14,4 +14,10 @@ public class MultiplicationResultAttempt {
   private final User user;
   private final Multiplication multiplication;
   private final int resultAttempt;
+
+  public MultiplicationResultAttempt() {
+    user = null;
+    multiplication = null;
+    resultAttempt = -1;
+  }
 }

@@ -13,4 +13,8 @@ import lombok.ToString;
 public class User {
 
   private final String alias;
+
+  protected User() {
+    alias = null;
+  }
 }
