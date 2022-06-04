@@ -1,5 +1,6 @@
 package microservices.book.multiplication.domain;
 
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -9,8 +10,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @EqualsAndHashCode
-public class Multiplication {
+public class User {
 
-  private final int factorA;
-  private final int factorB;
+  private final String alias;
 }
