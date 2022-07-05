@@ -31,6 +31,7 @@ public class MultiplicationControllerTest {
   @Autowired
   private JacksonTester<Multiplication> json;
 
+
   @Test
   public void getRandomMultiplicationTest() throws Exception {
     // given

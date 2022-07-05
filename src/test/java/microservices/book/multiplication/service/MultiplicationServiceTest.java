@@ -12,6 +12,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -87,5 +89,23 @@ public class MultiplicationServiceTest {
     // assert
     assertThat(attemptResult).isFalse();
     verify(attemptRepository).save(attempt);
+  }
+
+  @Test
+  public void retrieveStatsTest() {
+    // given
+    Multiplication multiplication = new Multiplication(50, 60);
+    User user = new User("John_doe");
+    List<MultiplicationResultAttempt> attempts = new ArrayList<>();
+    for (int i = 0; i < 10; i++) {
+      attempts.add(new MultiplicationResultAttempt(user, multiplication, 3001 + i, false));
+    }
+    given(attemptRepository.findTop5ByUserAliasOrderByIdDesc("John_doe")).willReturn(attempts.subList(5, 10));
+
+    // when
+    List<MultiplicationResultAttempt> latestAttempts =
+            multiplicationService.getStatsForUser("John_doe");
+    // then
+    assertThat(latestAttempts).isEqualTo(attempts.subList(5, 10));
   }
 }
