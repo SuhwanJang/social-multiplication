@@ -17,15 +17,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
-@AutoConfigureJsonTesters
-@WebMvcTest(MultiplicationController.class)
-public class MultiplicationControllerTest {
 
-  @MockBean
-  private MultiplicationService multiplicationService;
+@WebMvcTest(MultiplicationController.class)
+@AutoConfigureJsonTesters
+public class MultiplicationControllerTest {
 
   @Autowired
   private MockMvc mvc;
+
+  @MockBean
+  private MultiplicationService multiplicationService;
 
   @Autowired
   private JacksonTester<Multiplication> json;

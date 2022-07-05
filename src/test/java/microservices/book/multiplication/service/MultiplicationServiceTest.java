@@ -3,6 +3,8 @@ package microservices.book.multiplication.service;
 import microservices.book.multiplication.domain.Multiplication;
 import microservices.book.multiplication.domain.MultiplicationResultAttempt;
 import microservices.book.multiplication.domain.User;
+import microservices.book.multiplication.repository.MultiplicationResultAttemptRepository;
+import microservices.book.multiplication.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,11 +20,17 @@ public class MultiplicationServiceTest {
   @Mock
   private RandomGeneratorService randomGeneratorService;
 
+  @Mock
+  private MultiplicationResultAttemptRepository attemptRepository;
+
+  @Mock
+  private UserRepository userRepository;
+
   private MultiplicationService multiplicationService;
 
   @BeforeEach
   public void setUp() {
-    multiplicationService = new MultiplicationServiceImpl(randomGeneratorService);
+    multiplicationService = new MultiplicationServiceImpl(randomGeneratorService, attemptRepository, userRepository);
   }
 
   @Test
@@ -44,7 +52,7 @@ public class MultiplicationServiceTest {
     Multiplication multiplication = new Multiplication(50, 60);
     User user = new User("John_doe");
     MultiplicationResultAttempt attempt = new MultiplicationResultAttempt(user, multiplication,
-        3000);
+        3000, false);
 
     // when
     boolean attemptResult = multiplicationService.checkAttempt(attempt);
@@ -59,7 +67,7 @@ public class MultiplicationServiceTest {
     Multiplication multiplication = new Multiplication(50, 60);
     User user = new User("John_doe");
     MultiplicationResultAttempt attempt = new MultiplicationResultAttempt(user, multiplication,
-        3010);
+        3010, false);
 
     // when
     boolean attemptResult = multiplicationService.checkAttempt(attempt);

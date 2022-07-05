@@ -1,23 +1,29 @@
 package microservices.book.multiplication.domain;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
+import lombok.*;
+
+import javax.persistence.*;
 
 @RequiredArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 @Getter
 @ToString
 @EqualsAndHashCode
-public class MultiplicationResultAttempt {
+@Entity
+public final class MultiplicationResultAttempt {
 
+  @Id
+  @GeneratedValue
+  private Long id;
+
+  @ManyToOne(cascade = CascadeType.PERSIST)
+  @JoinColumn(name = "USER_ID")
   private final User user;
+
+  @ManyToOne(cascade = CascadeType.PERSIST)
+  @JoinColumn(name = "MULTIPLICATION_ID")
   private final Multiplication multiplication;
   private final int resultAttempt;
 
-  public MultiplicationResultAttempt() {
-    user = null;
-    multiplication = null;
-    resultAttempt = -1;
-  }
+  private final boolean correct;
 }

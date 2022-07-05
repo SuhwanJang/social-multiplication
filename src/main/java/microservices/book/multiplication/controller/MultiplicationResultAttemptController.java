@@ -17,15 +17,21 @@ public class MultiplicationResultAttemptController {
 
   private final MultiplicationService multiplicationService;
 
-  public MultiplicationResultAttemptController(MultiplicationService multiplicationService) {
+  MultiplicationResultAttemptController(MultiplicationService multiplicationService) {
     this.multiplicationService = multiplicationService;
   }
 
   @PostMapping
-  ResponseEntity<ResultResponse> postResult(
+  ResponseEntity<MultiplicationResultAttempt> postResult(
       @RequestBody MultiplicationResultAttempt multiplicationResultAttempt) {
-    return ResponseEntity.ok(
-        new ResultResponse(multiplicationService.checkAttempt(multiplicationResultAttempt)));
+    boolean isCorrect = multiplicationService.checkAttempt(multiplicationResultAttempt);
+    MultiplicationResultAttempt attemptCopy = new MultiplicationResultAttempt(
+            multiplicationResultAttempt.getUser(),
+            multiplicationResultAttempt.getMultiplication(),
+            multiplicationResultAttempt.getResultAttempt(),
+            isCorrect
+    );
+    return ResponseEntity.ok(attemptCopy);
   }
 
   @RequiredArgsConstructor
