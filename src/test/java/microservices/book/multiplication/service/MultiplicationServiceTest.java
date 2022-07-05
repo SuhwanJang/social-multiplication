@@ -3,6 +3,7 @@ package microservices.book.multiplication.service;
 import microservices.book.multiplication.domain.Multiplication;
 import microservices.book.multiplication.domain.MultiplicationResultAttempt;
 import microservices.book.multiplication.domain.User;
+import microservices.book.multiplication.repository.MultiplicationRepository;
 import microservices.book.multiplication.repository.MultiplicationResultAttemptRepository;
 import microservices.book.multiplication.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,11 +30,14 @@ public class MultiplicationServiceTest {
   @Mock
   private UserRepository userRepository;
 
+  @Mock
+  private MultiplicationRepository multiplicationRepository;
+
   private MultiplicationService multiplicationService;
 
   @BeforeEach
   public void setUp() {
-    multiplicationService = new MultiplicationServiceImpl(randomGeneratorService, attemptRepository, userRepository);
+    multiplicationService = new MultiplicationServiceImpl(randomGeneratorService, attemptRepository, userRepository, multiplicationRepository);
   }
 
   @Test

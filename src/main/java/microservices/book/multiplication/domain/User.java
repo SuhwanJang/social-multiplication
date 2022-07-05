@@ -3,10 +3,7 @@ package microservices.book.multiplication.domain;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @RequiredArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
@@ -14,6 +11,7 @@ import javax.persistence.Id;
 @ToString
 @EqualsAndHashCode
 @Entity
+@Table(name="USERS")
 public final class User {
 
   @Id
