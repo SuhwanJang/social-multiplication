@@ -11,8 +11,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 public class MultiplicationServiceTest {
@@ -53,12 +56,16 @@ public class MultiplicationServiceTest {
     User user = new User("John_doe");
     MultiplicationResultAttempt attempt = new MultiplicationResultAttempt(user, multiplication,
         3000, false);
+    MultiplicationResultAttempt verifiedAttempt = new MultiplicationResultAttempt(user, multiplication,
+            3000, true);
+    given(userRepository.findByAlias("John_doe")).willReturn(Optional.empty());
 
     // when
     boolean attemptResult = multiplicationService.checkAttempt(attempt);
 
     // assert
     assertThat(attemptResult).isTrue();
+    verify(attemptRepository).save(verifiedAttempt);
   }
 
   @Test
@@ -68,11 +75,13 @@ public class MultiplicationServiceTest {
     User user = new User("John_doe");
     MultiplicationResultAttempt attempt = new MultiplicationResultAttempt(user, multiplication,
         3010, false);
+    given(userRepository.findByAlias("John_doe")).willReturn(Optional.empty());
 
     // when
     boolean attemptResult = multiplicationService.checkAttempt(attempt);
 
     // assert
     assertThat(attemptResult).isFalse();
+    verify(attemptRepository).save(attempt);
   }
 }
